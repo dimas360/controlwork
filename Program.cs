@@ -1,27 +1,34 @@
 ﻿using static System.Console;
 Clear();
 
-string[] array_in = new string[5] {"123", "23", "hello", "world", "res"};
-string[] array_out = new string[array_in.Length];
-void SecondArrayWithIF(string[] array_in, string[] array_out)
-{
-    int count = 0;
-    for (int i = 0; i < array_in.Length; i++)
-    {
-    if(array_in[i].Length <= 3)
-        {
-        array_out[count] = array_in[i];
-        count++;
+string[] array = AskArray();
+string[] result = FindLessThan(array, 3);
+WriteLine($"[{string.Join(", ", array)}] -> [{string.Join(", ", result)}]");
+
+string[] FindLessThan(string[] array_in, int n) {
+    string[] array_out = new string[CountLessThan(array_in, n)];
+
+    for(int i = 0, j = 0; i < array_in.Length; i++) {
+        if(array_in[i].Length <= n) {
+            array_out[j] = array_in[i];
+            j++;
         }
     }
+
+    return array_out;
 }
-void PrintArray(string[] array)
-{
-    for (int i = 0; i < array.Length; i++)
-    {
-        Console.Write($"{array[i]} ");
+int CountLessThan(string[] input, int n) {
+    int count = 0;
+
+    for(int i = 0; i < input.Length; i++) {
+        if(input[i].Length <= n) {
+            count++;
+        }
     }
-    Console.WriteLine();
+
+    return count;
 }
-SecondArrayWithIF(array_in, array_out);
-PrintArray(array_out);
+string[] AskArray() {
+    Write("Введите значения через пробел: ");
+    return ReadLine().Split(" ");
+}
